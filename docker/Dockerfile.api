@@ -1,11 +1,9 @@
-FROM python:3.11
+FROM python:3.11-bookworm
 
 WORKDIR /app
 
-# Gunakan mirror lokal HTTP untuk menghindari masalah SSL/SafeSearch
-RUN find /etc/apt/ -name "*.list" -o -name "*.sources" | xargs sed -i 's/deb.debian.org/kartolo.sby.datautama.net.id/g' && \
-    find /etc/apt/ -name "*.list" -o -name "*.sources" | xargs sed -i 's/security.debian.org/kartolo.sby.datautama.net.id/g' && \
-    apt-get update --fix-missing && apt-get install -y \
+# Install system dependencies (Menyamakan basis dengan Dockerfile Node.js Anda yang berhasil)
+RUN apt-get update && apt-get install -y \
     ca-certificates \
     libgl1-mesa-glx \
     libglib2.0-0 \
