@@ -8,9 +8,9 @@ alembic
 psycopg2-binary
 pgvector
 insightface
-onnxruntime==1.15.0
+onnxruntime==1.10.0
 opencv-python-headless
-numpy<2.0.0
+numpy<1.24.0
 python-multipart
 celery
 redis
