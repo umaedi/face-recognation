@@ -15,7 +15,7 @@ services:
       resources:
         limits:
           cpus: "4"
-          memory: "2G"
+          memory: "4G"
     restart: always
 
   worker:
@@ -24,7 +24,7 @@ services:
       dockerfile: docker/Dockerfile.api # Menggunakan Dockerfile yang sama, hanya command beda
     command: >
       celery -A app.tasks.celery_app worker
-      -Q recognition --concurrency=4 --loglevel=info
+      -Q recognition --concurrency=2 --loglevel=info
     env_file:
       - .env
     networks:
@@ -33,7 +33,7 @@ services:
       resources:
         limits:
           cpus: "4"
-          memory: "2G"
+          memory: "4G"
     restart: always
 
   flower:
