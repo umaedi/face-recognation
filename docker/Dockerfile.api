@@ -20,6 +20,7 @@ COPY . .
 
 # Tambahkan path models ke environment
 ENV INSIGHTFACE_HOME=/app/models
+ENV PYTHONPATH=/app
 
 EXPOSE 8000
 
