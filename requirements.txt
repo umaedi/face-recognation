@@ -10,7 +10,7 @@ pgvector
 insightface
 onnxruntime==1.16.3
 opencv-python-headless
-numpy
+numpy<2.0.0
 python-multipart
 celery
 redis
