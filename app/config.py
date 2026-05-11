@@ -1,0 +1,29 @@
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from typing import Optional
+
+class Settings(BaseSettings):
+    # Database
+    DATABASE_URL: str = "postgresql+asyncpg://faceuser:secret@postgres:5432/facedb"
+    
+    # Redis
+    REDIS_URL: str = "redis://redis:6379/0"
+    
+    # User Service
+    USER_SERVICE_URL: str = "http://user-service:8001"
+    
+    # Face Engine
+    FACE_MODEL: str = "buffalo_l"
+    SIMILARITY_THRESHOLD: float = 0.60
+    MIN_QUALITY_SCORE: float = 0.50
+    
+    # Adaptive Routing
+    CPU_THRESHOLD: float = 60.0
+    QUEUE_THRESHOLD: int = 20
+    
+    # App
+    APP_ENV: str = "development"
+    SECRET_KEY: str = "your-secret-key"
+    
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
+settings = Settings()

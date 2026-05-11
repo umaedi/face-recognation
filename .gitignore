@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+venv/
+ENV/
+
+# Project specific
+models/
+project.md
+run.txt
+*.jpg
+*.png
+*.zip
+
+# Database
+alembic.ini
+migrations/versions/__pycache__/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
