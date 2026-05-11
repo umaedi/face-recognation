@@ -6,10 +6,13 @@ from app.api.routes import enrollment, recognition, status
 from app.config import settings
 from app.limiter import limiter
 
+from app.dependencies import verify_api_key
+
 app = FastAPI(
     title="Face Recognition System",
     description="Python-based face recognition with adaptive routing and PostgreSQL + pgvector",
-    version="1.0.0"
+    version="1.0.0",
+    dependencies=[Depends(verify_api_key)]
 )
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)

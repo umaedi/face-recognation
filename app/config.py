@@ -34,6 +34,7 @@ class Settings(BaseSettings):
     # App
     APP_ENV: str = "development"
     SECRET_KEY: str = "your-secret-key"
+    API_KEY: str
     
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
