@@ -1,14 +1,17 @@
-FROM python:3.13-slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install system dependencies for OpenCV and InsightFace
-RUN apt-get update && apt-get install -y \
+# Install system dependencies
+# ca-certificates ditambahkan seperti pada Dockerfile Node.js Anda yang berhasil
+RUN apt-get update --fix-missing && apt-get install -y \
+    ca-certificates \
     libgl1-mesa-glx \
     libglib2.0-0 \
     build-essential \
     libpq-dev \
     gcc \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
@@ -16,7 +19,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Tambahkan path models ke environment jika diperlukan
+# Tambahkan path models ke environment
 ENV INSIGHTFACE_HOME=/app/models
 
 EXPOSE 8000
