@@ -17,7 +17,7 @@ class FaceEngine:
             root='models',
             providers=['CPUExecutionProvider']
         )
-        self.app.prepare(ctx_id=0, det_size=(640, 640))
+        self.app.prepare(ctx_id=-1, det_size=(640, 640))
         
     def extract_embedding(self, image_bytes: bytes):
         """
