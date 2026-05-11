@@ -14,6 +14,15 @@ app = FastAPI(
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+from app.models import Base, Face, RecognitionResult
+from app.dependencies import engine
+
+@app.on_event("startup")
+async def startup():
+    # Create tables if they don't exist
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+
 @app.get("/")
 async def root():
     return {
