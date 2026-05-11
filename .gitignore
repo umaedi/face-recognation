@@ -10,7 +10,7 @@ venv/
 ENV/
 
 # Project specific
-models/
+/models/
 project.md
 run.txt
 *.jpg
