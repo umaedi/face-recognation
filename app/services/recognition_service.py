@@ -56,6 +56,7 @@ class RecognitionService:
         
         return {
             "mode": "realtime",
+            "face_model": settings.FACE_MODEL,
             "matched": match is not None,
             "user_id": match["user_id"] if match else None,
             "similarity": round(match["similarity"], 4) if match else 0.0,
@@ -91,6 +92,7 @@ class RecognitionService:
         
         return {
             "mode": "queued",
+            "face_model": settings.FACE_MODEL,
             "job_id": task.id,
             "status_url": f"/jobs/{task.id}",
             "message": "Server sibuk, proses diantrekan"
