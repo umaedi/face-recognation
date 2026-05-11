@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     FACE_MODEL: str
     SIMILARITY_THRESHOLD: float = 0.60
     MIN_QUALITY_SCORE: float = 0.50
+    RECOGNITION_RATE_LIMIT: str = "10/minute"
     
     # Adaptive Routing
     CPU_THRESHOLD: float = 60.0

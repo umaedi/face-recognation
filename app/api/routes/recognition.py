@@ -2,12 +2,13 @@ from fastapi import APIRouter, Depends, UploadFile, File, Form, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.dependencies import get_db
 from app.services.recognition_service import RecognitionService
+from app.config import settings
 from app.limiter import limiter
 
 router = APIRouter()
 
 @router.post("")
-@limiter.limit("5/minute")
+@limiter.limit(settings.RECOGNITION_RATE_LIMIT)
 async def recognize_face(
     request: Request,
     user_id: str = Form(...),
