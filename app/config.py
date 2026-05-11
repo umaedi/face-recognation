@@ -4,7 +4,7 @@ from typing import Optional
 
 class Settings(BaseSettings):
     # Database
-    DATABASE_URL: str = "postgresql+asyncpg://faceuser:secret@postgres:5432/facedb"
+    DATABASE_URL: str
     
     @field_validator("DATABASE_URL", mode="before")
     @classmethod
@@ -16,13 +16,13 @@ class Settings(BaseSettings):
         return v
     
     # Redis
-    REDIS_URL: str = "redis://redis:6379/0"
+    REDIS_URL: str
     
     # User Service
     USER_SERVICE_URL: str = "http://user-service:8001"
     
     # Face Engine
-    FACE_MODEL: str = "buffalo_l"
+    FACE_MODEL: str
     SIMILARITY_THRESHOLD: float = 0.60
     MIN_QUALITY_SCORE: float = 0.50
     
