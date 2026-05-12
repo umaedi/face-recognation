@@ -31,10 +31,17 @@ class Settings(BaseSettings):
     CPU_THRESHOLD: float = 60.0
     QUEUE_THRESHOLD: int = 20
     
+    # Minio / S3 Storage
+    AWS_ACCESS_KEY_ID: str
+    AWS_SECRET_ACCESS_KEY: str
+    AWS_DEFAULT_REGION: str = "us-east-1"
+    AWS_BUCKET: str
+    AWS_ENDPOINT: str
+    
     # App
-    APP_ENV: str = "development"
-    SECRET_KEY: str = "your-secret-key"
     API_KEY: str
+    APP_ENV: str = "development"
+    BASE_PUBLIC_URL: str = "https://face-recognation.tulangbawangkab.go.id"
     
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 

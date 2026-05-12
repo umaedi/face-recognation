@@ -25,6 +25,16 @@ async def enroll_face(
         "message": "Wajah berhasil didaftarkan"
     }
 
+@router.get("/latest/{user_id}")
+async def get_latest_face(user_id: str, db: AsyncSession = Depends(get_db)):
+    service = EnrollmentService(db)
+    result = await service.get_latest_face_url(user_id)
+    
+    if not result:
+        raise HTTPException(status_code=404, detail="No face data found for this user")
+        
+    return result
+
 @router.get("/{user_id}")
 async def list_faces(user_id: uuid.UUID, db: AsyncSession = Depends(get_db)):
     service = EnrollmentService(db)

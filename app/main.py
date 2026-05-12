@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request, Depends
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
-from app.api.routes import enrollment, recognition, status
+from app.api.routes import enrollment, recognition, status, media
 from app.config import settings
 from app.limiter import limiter
 
@@ -42,6 +42,7 @@ async def root():
 app.include_router(enrollment.router, prefix="/faces", tags=["Enrollment"])
 app.include_router(recognition.router, prefix="/recognize", tags=["Recognition"])
 app.include_router(status.router, prefix="/jobs", tags=["Status"])
+app.include_router(media.router, prefix="/stream", tags=["media"])
 
 if __name__ == "__main__":
     import uvicorn

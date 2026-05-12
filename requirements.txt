@@ -11,6 +11,8 @@ insightface
 onnxruntime==1.10.0
 opencv-python-headless
 numpy<1.24.0
+aioboto3
+types-aioboto3[s3]
 python-multipart
 celery
 redis
