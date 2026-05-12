@@ -16,4 +16,4 @@ async def stream_image(filename: str):
     if not image_bytes:
         raise HTTPException(status_code=404, detail="Image not found")
         
-    return Response(content=image_bytes, media_type="image/jpeg")
+    return StreamingResponse(io.BytesIO(image_bytes), media_type="image/jpeg")

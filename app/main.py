@@ -11,8 +11,7 @@ from app.dependencies import verify_api_key
 app = FastAPI(
     title="Face Recognition System",
     description="Python-based face recognition with adaptive routing and PostgreSQL + pgvector",
-    version="1.0.0",
-    dependencies=[Depends(verify_api_key)]
+    version="1.0.0"
 )
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
@@ -39,9 +38,26 @@ async def root():
     }
 
 # Include routers
-app.include_router(enrollment.router, prefix="/faces", tags=["Enrollment"])
-app.include_router(recognition.router, prefix="/recognize", tags=["Recognition"])
-app.include_router(status.router, prefix="/jobs", tags=["Status"])
+# Tambahkan dependencies=[Depends(verify_api_key)] HANYA pada router yang butuh pengamanan
+app.include_router(
+    enrollment.router, 
+    prefix="/faces", 
+    tags=["Enrollment"],
+    dependencies=[Depends(verify_api_key)]
+)
+app.include_router(
+    recognition.router, 
+    prefix="/recognize", 
+    tags=["Recognition"],
+    dependencies=[Depends(verify_api_key)]
+)
+app.include_router(
+    status.router, 
+    prefix="/jobs", 
+    tags=["Status"],
+    dependencies=[Depends(verify_api_key)]
+)
+# Endpoint media dibiarkan publik agar bisa diakses oleh tag <img> di mobile/web
 app.include_router(media.router, prefix="/stream", tags=["media"])
 
 if __name__ == "__main__":
