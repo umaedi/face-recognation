@@ -28,28 +28,23 @@ class EnrollmentService:
             
         from app.services.storage_service import storage_service
         
-        # 3. Rolling Enrollment Logic (Max 3 faces)
-        from sqlalchemy import select, delete, desc
+        # 3. Single Enrollment Logic (Limit to only 1 face for security)
+        from sqlalchemy import select, delete
         u_id = uuid.UUID(user_id) if isinstance(user_id, str) else user_id
         
-        # Count existing faces
-        query_faces = select(Face).where(Face.user_id == u_id).order_by(Face.created_at.asc())
+        # Get existing faces
+        query_faces = select(Face).where(Face.user_id == u_id)
         result = await self.db.execute(query_faces)
         existing_faces = result.scalars().all()
         
-        # LOGIKA PENGHEMATAN STORAGE:
-        # Hapus SEMUA foto lama di Minio milik user ini sebelum upload yang baru
-        # (Kita hanya ingin menyimpan 1 foto terakhir di Minio)
+        # Delete ALL existing faces (DB records + Minio images) to ensure only the newest one remains
+        # This prevents "ghost" embeddings from multiple enrollments being used in recognition
         for old_face in existing_faces:
             if old_face.image_path:
                 await storage_service.delete_image(old_face.image_path)
-                old_face.image_path = None # Kosongkan path di DB untuk record lama
+            await self.db.delete(old_face)
         
-        # Hapus record tertua jika sudah 3
-        if len(existing_faces) >= 3:
-            oldest_face = existing_faces[0]
-            await self.db.delete(oldest_face)
-            await self.db.flush() 
+        await self.db.flush()
             
         # 4. Upload to Minio (Foto Terbaru)
         image_path = await storage_service.upload_image(image_bytes, str(u_id))
